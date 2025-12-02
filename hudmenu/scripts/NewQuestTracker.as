@@ -346,6 +346,7 @@ package
             param2.title = "$$QUEST_TRACKER_OBJECTIVE_OR_PREFIX " + param2.title;
          }
          param2.isMergedLeaderObjective = param1.isMergedLeaderObj;
+         param2.ProcessTitleUpdates();
          param2.stateUpdate();
       }
       
@@ -467,7 +468,7 @@ package
          var _loc5_:HUDQuestTrackerEntry = null;
          var _loc6_:uint = 0;
          var _loc2_:Number = new Date().getTime() / 1000;
-         if(this.m_PreviousTime < _loc2_)
+         if(_loc2_ - this.m_PreviousTime > 1)
          {
             _loc3_ = 0;
             _loc4_ = _loc2_ - this.m_PreviousTime;
@@ -497,11 +498,13 @@ package
                         {
                            _loc3_++;
                            _loc5_.objectives[_loc6_].timer -= _loc4_;
+                           _loc5_.objectives[_loc6_].ProcessTitleUpdates();
                         }
                         else if(!_loc5_.objectives[_loc6_].useCountdownTimer)
                         {
                            _loc3_++;
                            _loc5_.objectives[_loc6_].timer += _loc4_;
+                           _loc5_.objectives[_loc6_].ProcessTitleUpdates();
                         }
                      }
                      _loc6_++;

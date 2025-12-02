@@ -17,7 +17,7 @@ package
    import flash.text.TextField;
    import scaleform.gfx.TextFieldEx;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol944")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol958")]
    public dynamic class HUDTeamWidget extends BSUIComponent
    {
       
@@ -223,6 +223,7 @@ package
                case HUDModes.FURNITURE_ENTER_EXIT:
                case HUDModes.WORKSHOP_MODE:
                case HUDModes.WORKSHOP_NO_CROSSHAIR_MODE:
+               case HUDModes.EXAMINE_CONFIRM_MODE:
                   _loc1_ = false;
             }
          }

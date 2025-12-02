@@ -53,6 +53,10 @@ package
       
       public static const WANTED_SCOREBOARD_RANK_Y_OFFSET:Number = 6;
       
+      public static const ON_STARTEDITTEXT:String = "ControlMap::StartEditText";
+      
+      public static const ON_ENDEDITTEXT:String = "ControlMap::EndEditText";
+      
       private static const NOTIFICATION_OFFSET_Y_DIALOGUE:Number = 275;
       
       private static const NOTIFICATION_OFFSET_Y_CONTAINER:Number = 15;
@@ -74,10 +78,6 @@ package
       private static const TUTORIAL_X_PADDING:Number = 21;
       
       private static const TUTORIAL_Y_PADDING:Number = 110;
-      
-      public static const ON_STARTEDITTEXT:String = "ControlMap::StartEditText";
-      
-      public static const ON_ENDEDITTEXT:String = "ControlMap::EndEditText";
       
       public var __SFCodeObj:Object;
       
@@ -159,6 +159,8 @@ package
       
       public var PingMarkers_mc:MovieClip;
       
+      public var LocalEmote_mc:EmoteWidget;
+      
       public var FloatingTargetManager_mc:HUDFloatingTargetManager;
       
       public var AnnounceAvailableQuest_mc:MovieClip;
@@ -167,7 +169,13 @@ package
       
       public var NewQuestTracker_mc:NewQuestTracker;
       
+      public var RequestUsername:String = "";
+      
+      public var BGSCodeObj:Object;
+      
       private var m_EntityID:uint = 0;
+      
+      private var DpadMap_mc:MovieClip;
       
       private var m_QuestTrackerBaseX:Number = 0;
       
@@ -233,23 +241,15 @@ package
       
       private var m_IsFreeCamMode:Boolean = false;
       
-      private var DpadMap_mc:MovieClip;
-      
-      public var BGSCodeObj:Object;
-      
       private var ControlMapData:Object;
       
       private var CharacterInfoData:Object;
       
-      private var ReviveButtonCallForHelp:BSButtonHintData;
+      private var m_QuestAnnounceQueue:Vector.<QuestEvent>;
       
-      private var ReviveButtonGiveUp:BSButtonHintData;
+      private var m_QuestAnnounceBusy:Boolean = false;
       
-      internal var hideTimeout:Number = -1;
-      
-      public var RequestUsername:String = "";
-      
-      private var LocalEmote_mc:EmoteWidget;
+      private var m_UniqueFanfareActive:Boolean = false;
       
       public var RevivePrompt_mc:MovieClip;
       
@@ -257,9 +257,9 @@ package
       
       private var m_PrevReviveTime:Number = -1;
       
-      private var m_QuestAnnounceQueue:Vector.<QuestEvent>;
+      private var ReviveButtonCallForHelp:BSButtonHintData;
       
-      private var m_QuestAnnounceBusy:Boolean = false;
+      private var ReviveButtonGiveUp:BSButtonHintData;
       
       public function HUDMenu()
       {
@@ -331,9 +331,7 @@ package
          buttonHintDataV.push(this.ReviveButtonGiveUp);
          reviveButtonBar.SetButtonHintData(buttonHintDataV);
          addEventListener(QuestEvent.EVENT_AVAILABLE,this.onQuestAvailable);
-         this.LocalEmote_mc = this.RightMeters_mc.LocalEmote_mc;
          this.LocalEmote_mc.align = EmoteWidget.ALIGN_RIGHT;
-         this.LocalEmote_mc.scale = 1;
          BSUIDataManager.Subscribe("PVPData",function(param1:FromClientDataEvent):*
          {
             var _loc2_:* = param1.data;
@@ -546,6 +544,47 @@ package
       private function get HUDPartyListBase_mc() : HUDTeamWidget
       {
          return this.PartyResolutionContainer_mc.HUDPartyListBase_mc;
+      }
+      
+      public function set levelUpVisible(param1:Boolean) : void
+      {
+         this.m_LevelUpVisible = param1;
+         this.updateCurrencyUpdatesPos();
+         if(param1)
+         {
+            this.HUDNotificationsGroup_mc.XPMeter_mc.gotoAndStop("levelup");
+            this.HUDNotificationsGroup_mc.XPMeter_mc.NumberText.visible = false;
+         }
+         else
+         {
+            this.HUDNotificationsGroup_mc.XPMeter_mc.gotoAndStop("xp");
+            this.HUDNotificationsGroup_mc.XPMeter_mc.NumberText.visible = true;
+         }
+      }
+      
+      public function set repLevelUpVisible(param1:Boolean) : void
+      {
+         this.m_RepLevelUpVisible = param1;
+         this.updateCurrencyUpdatesPos();
+      }
+      
+      public function set repChangeVisible(param1:Boolean) : void
+      {
+         this.m_RepChangeVisible = param1;
+         this.updateCurrencyUpdatesPos();
+      }
+      
+      public function onAddedToStageEvent(param1:Event) : void
+      {
+         this.onAddedToStage();
+      }
+      
+      override public function onAddedToStage() : void
+      {
+         super.onAddedToStage();
+         this.CharacterInfoData = BSUIDataManager.GetDataFromClient("CharacterInfoData").data;
+         this.ControlMapData = BSUIDataManager.GetDataFromClient("ControlMapData").data;
+         BSUIDataManager.Subscribe("CharacterInfoData",this.onCharacterInfoUpdate);
       }
       
       private function revertScoreboardFilter() : void
@@ -768,34 +807,6 @@ package
          }
       }
       
-      public function set levelUpVisible(param1:Boolean) : void
-      {
-         this.m_LevelUpVisible = param1;
-         this.updateCurrencyUpdatesPos();
-         if(param1)
-         {
-            this.HUDNotificationsGroup_mc.XPMeter_mc.gotoAndStop("levelup");
-            this.HUDNotificationsGroup_mc.XPMeter_mc.NumberText.visible = false;
-         }
-         else
-         {
-            this.HUDNotificationsGroup_mc.XPMeter_mc.gotoAndStop("xp");
-            this.HUDNotificationsGroup_mc.XPMeter_mc.NumberText.visible = true;
-         }
-      }
-      
-      public function set repLevelUpVisible(param1:Boolean) : void
-      {
-         this.m_RepLevelUpVisible = param1;
-         this.updateCurrencyUpdatesPos();
-      }
-      
-      public function set repChangeVisible(param1:Boolean) : void
-      {
-         this.m_RepChangeVisible = param1;
-         this.updateCurrencyUpdatesPos();
-      }
-      
       private function onLeaderboardDataUpdate(param1:FromClientDataEvent) : void
       {
          var _loc2_:* = param1.data.localScoreboardEntry;
@@ -827,16 +838,65 @@ package
          gotoAndStop(param1.data.AspectRatio);
       }
       
+      private function isUniqueFanfareVisible() : Boolean
+      {
+         var _loc1_:* = this.AnnounceEventWidget_mc.UniqueItemContainer_mc;
+         return _loc1_ && _loc1_.currentFrameLabel != "off";
+      }
+      
+      private function isOtherFanfareVisible() : Boolean
+      {
+         var isClipActive:Function = function(param1:MovieClip):Boolean
+         {
+            if(param1 != null && param1.currentFrameLabel != null)
+            {
+               return param1.currentFrameLabel != "off";
+            }
+            return false;
+         };
+         var announceWidget:* = this.AnnounceEventWidget_mc;
+         if(announceWidget == null)
+         {
+            return false;
+         }
+         return Boolean(isClipActive(announceWidget.QuestRewardContainer_mc)) || Boolean(isClipActive(announceWidget.QuestCompleteContainer_mc)) || Boolean(isClipActive(announceWidget.AnnounceAvailableQuest_mc)) || Boolean(isClipActive(announceWidget.AnnounceActiveQuest_mc)) || Boolean(isClipActive(announceWidget.AnnounceMessage_mc)) || Boolean(isClipActive(announceWidget.EventHUDNotification_mc)) || Boolean(isClipActive(announceWidget.MiscAvailableAnnounce_mc));
+      }
+      
+      private function updateStealthMeterVisibility() : void
+      {
+         var _loc1_:Boolean = this.isUniqueFanfareVisible();
+         var _loc2_:Boolean = this.isOtherFanfareVisible();
+         if(_loc1_)
+         {
+            this.m_UniqueFanfareActive = true;
+         }
+         if(this.m_UniqueFanfareActive && !_loc2_)
+         {
+            this.TopCenterGroup_mc.StealthMeter_mc.visible = true;
+            this.TopCenterGroup_mc.StealthMeter_mc.gotoAndPlay("rollOn");
+         }
+         else
+         {
+            this.TopCenterGroup_mc.StealthMeter_mc.gotoAndPlay("rollOff");
+         }
+      }
+      
       private function onFanfareActive(param1:Event) : *
       {
-         this.TopCenterGroup_mc.StealthMeter_mc.gotoAndPlay("rollOff");
+         this.updateStealthMeterVisibility();
          this.QuestTracker.SetAnimationBlocked(true);
          this.m_FanfareAnimating = true;
       }
       
       private function onFanfareCleared(param1:Event) : *
       {
+         if(!this.isUniqueFanfareVisible())
+         {
+            this.m_UniqueFanfareActive = false;
+         }
+         this.updateStealthMeterVisibility();
          this.TopCenterGroup_mc.StealthMeter_mc.gotoAndPlay("rollOn");
+         this.TopCenterGroup_mc.StealthMeter_mc.visible = true;
          this.QuestTracker.SetAnimationBlocked(false);
          this.m_FanfareAnimating = false;
       }
@@ -895,6 +955,7 @@ package
          this.AnnounceAvailableQuest_mc.Title_mc.visible = false;
          this.AnnounceAvailableQuest_mc.Prompt_mc.visible = false;
          this.AnnounceAvailableQuest_mc.gotoAndPlay("rollOn");
+         this.TopCenterGroup_mc.StealthMeter_mc.gotoAndPlay("rollOff");
          setTimeout(function():*
          {
             AnnounceAvailableQuest_mc.gotoAndPlay("expand");
@@ -908,19 +969,6 @@ package
             m_QuestAnnounceBusy = false;
             evaluateQuestAnnounceQueue();
          },11000);
-      }
-      
-      public function onAddedToStageEvent(param1:Event) : void
-      {
-         this.onAddedToStage();
-      }
-      
-      override public function onAddedToStage() : void
-      {
-         super.onAddedToStage();
-         this.CharacterInfoData = BSUIDataManager.GetDataFromClient("CharacterInfoData").data;
-         this.ControlMapData = BSUIDataManager.GetDataFromClient("ControlMapData").data;
-         BSUIDataManager.Subscribe("CharacterInfoData",this.onCharacterInfoUpdate);
       }
       
       public function onCharacterInfoUpdate(param1:FromClientDataEvent) : void

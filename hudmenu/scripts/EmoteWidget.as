@@ -30,11 +30,11 @@ package
       
       private var m_Scale:Number = 1;
       
+      private var m_ProviderCallback:Function;
+      
       private var m_MaxEmoteWidth:Number = 0;
       
       private var m_MaxEmoteHeight:Number = 0;
-      
-      private var m_ProviderCallback:Function;
       
       private var m_HasPrompt:* = false;
       
@@ -43,6 +43,16 @@ package
          super();
          addEventListener(Event.ADDED_TO_STAGE,this.onAddedToStage);
          addEventListener(Event.REMOVED_FROM_STAGE,this.onRemovedFromStage);
+      }
+      
+      public function set entityID(param1:uint) : void
+      {
+         this.m_EntityID = param1;
+      }
+      
+      public function get entityID() : uint
+      {
+         return this.m_EntityID;
       }
       
       public function get maxEmoteWidth() : Number
@@ -85,14 +95,17 @@ package
          }
       }
       
-      public function set entityID(param1:uint) : void
+      public function onAddedToStage(param1:Event) : void
       {
-         this.m_EntityID = param1;
+         this.m_ProviderCallback = BSUIDataManager.Subscribe("ActiveEmoteData",this.onEmoteUpdate);
       }
       
-      public function get entityID() : uint
+      public function onRemovedFromStage(param1:Event) : void
       {
-         return this.m_EntityID;
+         if(this.m_ProviderCallback != null)
+         {
+            BSUIDataManager.Unsubscribe("ActiveEmoteData",this.onEmoteUpdate);
+         }
       }
       
       private function getChildElement(param1:int) : EmoteContainer
@@ -237,7 +250,7 @@ package
                _loc3_ = new EmoteContainer();
                _loc3_.scaleX = this.m_Scale;
                _loc3_.scaleY = this.m_Scale;
-               _loc3_.image = _loc2_;
+               _loc3_.setImage(_loc2_,param1.data.displayValue);
                _loc3_.mod = param1.data.emoteMod;
                if(param1.data.emoteMod == EmoteContainer.MOD_PROMPT)
                {
@@ -255,19 +268,6 @@ package
                }
                this.updatePositions();
             }
-         }
-      }
-      
-      public function onAddedToStage(param1:Event) : void
-      {
-         this.m_ProviderCallback = BSUIDataManager.Subscribe("ActiveEmoteData",this.onEmoteUpdate);
-      }
-      
-      public function onRemovedFromStage(param1:Event) : void
-      {
-         if(this.m_ProviderCallback != null)
-         {
-            BSUIDataManager.Unsubscribe("ActiveEmoteData",this.onEmoteUpdate);
          }
       }
    }

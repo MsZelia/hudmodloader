@@ -3,7 +3,7 @@ package HUDMenu_fla
    import flash.display.MovieClip;
    import flash.text.TextField;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1739")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1758")]
    public dynamic class pvpEnemyScoreText_mc_13 extends MovieClip
    {
       

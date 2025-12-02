@@ -11,7 +11,7 @@ package
    import scaleform.gfx.Extensions;
    import scaleform.gfx.TextFieldEx;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol676")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol691")]
    public class HUDQuestTrackerObjective extends BSDisplayObject
    {
       
@@ -20,6 +20,12 @@ package
       public static const METER_TYPE_DEFAULT:uint = 0;
       
       public static const METER_TYPE_TWO_WAY:uint = 1;
+      
+      public static var OPTIONAL_LABEL:String = "";
+      
+      public static var COMPLETED_LABEL:String = "";
+      
+      public static var FAILED_LABEL:String = "";
       
       public var Icon_mc:MovieClip;
       
@@ -99,6 +105,10 @@ package
       
       private var m_IsProximityTracker:Boolean = false;
       
+      private var m_IsPrefixSuffixDirty:Boolean = false;
+      
+      private var m_IsTitleDirty:Boolean = false;
+      
       public function HUDQuestTrackerObjective()
       {
          addFrameScript(0,this.frame1,15,this.frame16,38,this.frame39,43,this.frame44,115,this.frame116,167,this.frame168,171,this.frame172,204,this.frame205,238,this.frame239,253,this.frame254,268,this.frame269);
@@ -107,6 +117,18 @@ package
          this.m_MeterFrames = this.Meter_mc.Internal_mc.totalFrames;
          this.Meter_mc.visible = false;
          Extensions.enabled = true;
+         if(OPTIONAL_LABEL.length == 0)
+         {
+            OPTIONAL_LABEL = GlobalFunc.LocalizeFormattedString("$QuestTrackerState_Optional");
+         }
+         if(COMPLETED_LABEL.length == 0)
+         {
+            COMPLETED_LABEL = GlobalFunc.LocalizeFormattedString("$QuestTrackerState_Completed");
+         }
+         if(FAILED_LABEL.length == 0)
+         {
+            FAILED_LABEL = GlobalFunc.LocalizeFormattedString("$QuestTrackerState_Failed");
+         }
       }
       
       public function onQuestDataChange(param1:Array) : void
@@ -224,9 +246,13 @@ package
       
       public function set alertMessage(param1:String) : void
       {
-         this.m_AlertMessage = param1;
-         var _loc2_:TextField = this.Alert_mc.Internal_mc.AlertText_mc.AlertText_tf;
-         _loc2_.text = this.m_AlertMessage;
+         var _loc2_:TextField = null;
+         if(this.m_AlertMessage != param1)
+         {
+            this.m_AlertMessage = param1;
+            _loc2_ = this.Alert_mc.Internal_mc.AlertText_mc.AlertText_tf;
+            _loc2_.text = this.m_AlertMessage;
+         }
       }
       
       public function set isMergedLeaderObjective(param1:Boolean) : void
@@ -245,8 +271,11 @@ package
       
       public function set timer(param1:Number) : void
       {
-         this.m_Timer = param1;
-         this.updateTitle();
+         if(this.m_Timer != param1)
+         {
+            this.m_Timer = param1;
+            this.m_IsPrefixSuffixDirty = true;
+         }
       }
       
       public function get useCountdownTimer() : Boolean
@@ -321,8 +350,11 @@ package
       
       public function set progress(param1:Number) : void
       {
-         this.m_Progress = param1;
-         this.updateProgress();
+         if(this.m_Progress != param1)
+         {
+            this.m_Progress = param1;
+            this.updateProgress();
+         }
       }
       
       private function updateProgress() : void
@@ -415,7 +447,15 @@ package
          }
       }
       
-      private function updateTitle() : void
+      private function updateTitleText() : void
+      {
+         this.Title_mc.setTitleData(this.m_Title,false);
+         this.TitleCompleted_mc.setTitleData(this.m_Title,false);
+         this.m_IsPrefixSuffixDirty = true;
+         this.m_IsTitleDirty = false;
+      }
+      
+      private function updateTitlePrefixSuffix() : void
       {
          var _loc1_:* = "";
          var _loc2_:* = "";
@@ -429,21 +469,22 @@ package
          }
          if(this.m_IsOptional)
          {
-            this.Title_mc.setTitleData("$$QuestTrackerState_Optional " + _loc2_ + this.m_Title + _loc1_);
+            this.Title_mc.ShowTitleText(OPTIONAL_LABEL + " " + _loc2_,_loc1_);
          }
          else
          {
-            this.Title_mc.setTitleData(_loc2_ + this.m_Title + _loc1_);
+            this.Title_mc.ShowTitleText(_loc2_,_loc1_);
          }
          if(this.m_State == HUDQuestTracker.QUEST_STATE_FAILED)
          {
-            this.TitleCompleted_mc.setTitleData("$$QuestTrackerState_Failed " + _loc2_ + this.m_Title + _loc1_);
+            this.TitleCompleted_mc.ShowTitleText(FAILED_LABEL + " " + _loc2_,_loc1_);
          }
          else
          {
-            this.TitleCompleted_mc.setTitleData("$$QuestTrackerState_Completed " + _loc2_ + this.m_Title + _loc1_);
+            this.TitleCompleted_mc.ShowTitleText(COMPLETED_LABEL + " " + _loc2_,_loc1_);
          }
          this.updateAlertPos();
+         this.m_IsPrefixSuffixDirty = false;
       }
       
       public function set questID(param1:uint) : void
@@ -518,20 +559,29 @@ package
       
       public function set count(param1:Number) : void
       {
-         this.m_Count = param1;
-         this.updateTitle();
+         if(this.m_Count != param1)
+         {
+            this.m_Count = param1;
+            this.m_IsPrefixSuffixDirty = true;
+         }
       }
       
       public function set countMax(param1:Number) : void
       {
-         this.m_CountMax = param1;
-         this.updateTitle();
+         if(this.m_CountMax != param1)
+         {
+            this.m_CountMax = param1;
+            this.m_IsPrefixSuffixDirty = true;
+         }
       }
       
       public function set state(param1:Number) : *
       {
-         this.m_State = param1;
-         this.updateTitle();
+         if(this.m_State != param1)
+         {
+            this.m_State = param1;
+            this.m_IsPrefixSuffixDirty = true;
+         }
       }
       
       public function get state() : Number
@@ -554,6 +604,18 @@ package
          else
          {
             gotoAndPlay(param1 ? "FadeOutIncompleteFast" : "FadeOutIncomplete");
+         }
+      }
+      
+      public function ProcessTitleUpdates() : void
+      {
+         if(this.m_IsTitleDirty)
+         {
+            this.updateTitleText();
+         }
+         if(this.m_IsPrefixSuffixDirty)
+         {
+            this.updateTitlePrefixSuffix();
          }
       }
       
@@ -589,14 +651,20 @@ package
       
       public function set isOptional(param1:Boolean) : *
       {
-         this.m_IsOptional = param1;
-         this.updateTitle();
+         if(this.m_IsOptional != param1)
+         {
+            this.m_IsOptional = param1;
+            this.m_IsPrefixSuffixDirty = true;
+         }
       }
       
       public function set title(param1:String) : *
       {
-         this.m_Title = param1;
-         this.updateTitle();
+         if(this.m_Title != param1)
+         {
+            this.m_Title = param1;
+            this.m_IsTitleDirty = true;
+         }
       }
       
       public function get title() : String

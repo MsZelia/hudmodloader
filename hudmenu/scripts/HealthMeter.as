@@ -11,8 +11,6 @@ package
    public class HealthMeter extends BSUIComponent
    {
       
-      private static const ICON_OFFSET:* = 115;
-      
       public var MeterBar_mc:MovieClip;
       
       public var MeterBarEnemy_mc:MovieClip;
@@ -29,13 +27,11 @@ package
       
       public var RadsBar_mc:MovieClip;
       
-      public var EncounterMeterIcon_mc:MovieClip;
+      public var EncounterHolder_mc:EncounterHolder;
       
       public var CampRepairIcon_mc:MovieClip;
       
       public var LevelText_mc:MovieClip;
-      
-      public var SkullIcon_mc:MovieClip;
       
       public var OwnerInfo_mc:MovieClip;
       
@@ -45,33 +41,29 @@ package
       
       public var BossIcon_mc:MovieClip;
       
-      private var DisplayText_tf:TextField;
+      private var m_IsHostile:Boolean = true;
       
-      private var _IsHostile:Boolean = true;
+      private var m_IsFriendly:Boolean = true;
       
-      private var _IsFriendly:Boolean = true;
+      private var m_OwningPlayerName:String = "";
       
-      private var _OwningPlayerName:String = "";
+      private var m_AvatarID:String = "";
       
-      private var _AvatarID:String = "";
+      private var m_IsBoss:Boolean = false;
       
-      private var _IsBoss:Boolean = false;
+      private var m_TargetLevel:int = 0;
       
-      private var _IsAI:Boolean = false;
-      
-      private var _TargetLevel:int = 0;
-      
-      private var _Bounty:int = 0;
-      
-      private var _Wanted:Boolean = false;
+      private var m_Wanted:Boolean = false;
       
       private var m_DoTDamage:Boolean = false;
       
-      private var m_EncounterSkullIconIndex:int = 0;
+      private var m_EncounterIconLevel:int = 0;
+      
+      private var m_EncounterIconType:int = 0;
       
       private var m_ShowPassiveRepairIcon:Boolean = false;
       
-      private var m_PassiveRepairIconIndex:int = 0;
+      private var DisplayText_tf:TextField;
       
       public function HealthMeter()
       {
@@ -101,93 +93,72 @@ package
          {
             this.CampRepairIcon_mc.alpha = 1;
          }
+         if(this.EncounterHolder_mc)
+         {
+            this.EncounterHolder_mc.visible = false;
+         }
       }
       
       public function set IsHostile(param1:Boolean) : *
       {
-         if(this._IsHostile != param1)
+         if(this.m_IsHostile != param1)
          {
-            this._IsHostile = param1;
+            this.m_IsHostile = param1;
             this.UpdateBarFlag();
-            SetIsDirty();
          }
       }
       
       public function set IsFriendly(param1:Boolean) : *
       {
-         if(this._IsFriendly != param1)
+         if(this.m_IsFriendly != param1)
          {
-            this._IsFriendly = param1;
+            this.m_IsFriendly = param1;
             this.UpdateBarFlag();
-            SetIsDirty();
          }
       }
       
       public function set OwningPlayerName(param1:String) : void
       {
-         if(param1 != this._OwningPlayerName)
+         if(param1 != this.m_OwningPlayerName)
          {
-            this._OwningPlayerName = param1;
+            this.m_OwningPlayerName = param1;
             SetIsDirty();
          }
       }
       
       public function set AvatarID(param1:String) : void
       {
-         if(param1 != this._AvatarID)
+         if(param1 != this.m_AvatarID)
          {
-            this._AvatarID = param1;
+            this.m_AvatarID = param1;
             SetIsDirty();
          }
       }
       
       public function set IsBoss(param1:Boolean) : *
       {
-         if(this._IsBoss != param1)
+         if(this.m_IsBoss != param1)
          {
-            this._IsBoss = param1;
+            this.m_IsBoss = param1;
             this.UpdateBarFlag();
-            SetIsDirty();
-         }
-      }
-      
-      public function set IsAI(param1:Boolean) : *
-      {
-         if(this._IsAI != param1)
-         {
-            this._IsAI = param1;
-            this.UpdateBarFlag();
-            SetIsDirty();
          }
       }
       
       public function set TargetLevel(param1:int) : *
       {
-         if(this._TargetLevel != param1)
+         if(this.m_TargetLevel != param1)
          {
-            this._TargetLevel = param1;
+            this.m_TargetLevel = param1;
             this.UpdateBarFlag();
-            SetIsDirty();
-         }
-      }
-      
-      public function set Bounty(param1:int) : *
-      {
-         if(this._Bounty != param1)
-         {
-            this._Bounty = param1;
-            this.UpdateBarFlag();
-            SetIsDirty();
          }
       }
       
       public function set Wanted(param1:Boolean) : *
       {
-         if(this._Wanted != param1)
+         if(this.m_Wanted != param1)
          {
-            this._Wanted = param1;
+            this.m_Wanted = param1;
             this.UpdateBarFlag();
-            SetIsDirty();
          }
       }
       
@@ -198,20 +169,32 @@ package
             this.m_DoTDamage = param1;
             this.UpdateBarFlag();
             this.DoTIconsManager_mc.reset();
-            SetIsDirty();
          }
       }
       
-      public function set EncounterSkullIconIndex(param1:int) : *
+      public function set EncounterIconType(param1:int) : *
       {
-         if(this.m_EncounterSkullIconIndex != param1)
+         if(this.m_EncounterIconType != param1)
          {
-            this.AssignEncounterSkullIconIndex(param1);
+            this.m_EncounterIconType = param1;
             SetIsDirty();
          }
-         if(!this.EncounterMeterIcon_mc.hasEventListener(Event.ENTER_FRAME))
+         if(Boolean(this.EncounterHolder_mc) && !this.EncounterHolder_mc.hasEventListener(Event.ENTER_FRAME))
          {
-            this.EncounterMeterIcon_mc.addEventListener(Event.ENTER_FRAME,this.onSetEncounterSkullIconIndex);
+            this.EncounterHolder_mc.addEventListener(Event.ENTER_FRAME,this.onSetEncounterIcon);
+         }
+      }
+      
+      public function set EncounterIconLevel(param1:int) : *
+      {
+         if(this.m_EncounterIconLevel != param1)
+         {
+            this.m_EncounterIconLevel = param1;
+            SetIsDirty();
+         }
+         if(Boolean(this.EncounterHolder_mc) && !this.EncounterHolder_mc.hasEventListener(Event.ENTER_FRAME))
+         {
+            this.EncounterHolder_mc.addEventListener(Event.ENTER_FRAME,this.onSetEncounterIcon);
          }
       }
       
@@ -244,13 +227,13 @@ package
       
       private function UpdateBarFlag() : *
       {
-         if(this._IsHostile || this._Wanted)
+         if(this.m_IsHostile || this.m_Wanted)
          {
             gotoAndStop("Hostile");
          }
          else
          {
-            gotoAndStop(this._IsFriendly ? "Friendly" : "Nonhostile");
+            gotoAndStop(this.m_IsFriendly ? "Friendly" : "Nonhostile");
          }
          if(this.m_DoTDamage)
          {
@@ -260,8 +243,9 @@ package
          {
             this.HealthBarFrame_mc.gotoAndStop("static");
          }
-         this.LevelText_mc.gotoAndStop(this._IsBoss ? "star" : "square");
-         this.LevelText_mc.LevelText_tf.text = this._TargetLevel.toString();
+         this.LevelText_mc.gotoAndStop(this.m_IsBoss ? "star" : "square");
+         this.LevelText_mc.LevelText_tf.text = this.m_TargetLevel.toString();
+         SetIsDirty();
       }
       
       public function SetMeterPercent(param1:Number) : *
@@ -273,11 +257,11 @@ package
       {
          if(this.OwnerInfo_mc)
          {
-            if(this._OwningPlayerName.length > 0)
+            if(this.m_OwningPlayerName.length > 0)
             {
                this.OwnerInfo_mc.visible = true;
-               this.OwnerInfo_mc.Name_tf.text = this._OwningPlayerName;
-               (this.OwnerInfo_mc.AccountIcon_mc as ImageFixture).LoadExternal(GlobalFunc.GetAccountIconPath(this._AvatarID),GlobalFunc.PLAYER_ICON_TEXTURE_BUFFER);
+               this.OwnerInfo_mc.Name_tf.text = this.m_OwningPlayerName;
+               (this.OwnerInfo_mc.AccountIcon_mc as ImageFixture).LoadExternal(GlobalFunc.GetAccountIconPath(this.m_AvatarID),GlobalFunc.PLAYER_ICON_TEXTURE_BUFFER);
                this.OwnerInfo_mc.x = this.LevelText_mc.x - this.LevelText_mc.width - this.OwnerInfo_mc.width;
             }
             else
@@ -295,43 +279,19 @@ package
          }
       }
       
-      public function AssignEncounterSkullIconIndex(param1:uint) : void
+      private function onSetEncounterIcon() : *
       {
-         this.m_EncounterSkullIconIndex = param1;
-         if(param1 > 0)
+         if(this.m_EncounterIconLevel > 0 && this.m_EncounterIconType > EncounterHolder.ENCOUNTER_TYPE_NONE)
          {
-            this.EncounterMeterIcon_mc.gotoAndStop(this.GetEncounterSkullFrameLabel());
-            this.EncounterMeterIcon_mc.BossIcon_mc.visible = this._IsBoss;
-         }
-      }
-      
-      private function onSetEncounterSkullIconIndex() : *
-      {
-         if(this.m_EncounterSkullIconIndex > 0)
-         {
-            this.EncounterMeterIcon_mc.visible = true;
+            this.EncounterHolder_mc.visible = true;
+            this.EncounterHolder_mc.SetIcon(this.m_EncounterIconType,this.m_EncounterIconLevel,this.m_IsBoss);
+            this.EncounterHolder_mc.x = this.LevelText_mc.x + this.LevelText_mc.width / 2;
          }
          else
          {
-            this.EncounterMeterIcon_mc.visible = false;
+            this.EncounterHolder_mc.visible = false;
          }
-         this.EncounterMeterIcon_mc.x = this.LevelText_mc.x;
-         this.EncounterMeterIcon_mc.removeEventListener(Event.ENTER_FRAME,this.onSetEncounterSkullIconIndex);
-      }
-      
-      private function GetEncounterSkullFrameLabel() : String
-      {
-         switch(this.m_EncounterSkullIconIndex)
-         {
-            case 1:
-               return "Easy";
-            case 2:
-               return "Medium";
-            case 3:
-               return "Difficult";
-            default:
-               return "";
-         }
+         this.EncounterHolder_mc.removeEventListener(Event.ENTER_FRAME,this.onSetEncounterIcon);
       }
       
       public function set ShowPassiveRepairIcon(param1:Boolean) : *
@@ -340,10 +300,6 @@ package
          {
             this.m_ShowPassiveRepairIcon = param1;
             SetIsDirty();
-         }
-         if(this.m_ShowPassiveRepairIcon)
-         {
-            this.PassiveRepairIconIndex = this.SkullIcon_mc.visible ? 1 : 0;
          }
          if(!this.CampRepairIcon_mc.hasEventListener(Event.ENTER_FRAME))
          {
@@ -356,32 +312,6 @@ package
          this.CampRepairIcon_mc.visible = this.m_ShowPassiveRepairIcon;
          this.CampRepairIcon_mc.removeEventListener(Event.ENTER_FRAME,this.onSetShowPassiveRepairIcon);
          SetIsDirty();
-      }
-      
-      public function set PassiveRepairIconIndex(param1:int) : *
-      {
-         if(this.m_PassiveRepairIconIndex != param1)
-         {
-            this.AssignPassiveRepairIconIndex(param1);
-            SetIsDirty();
-         }
-      }
-      
-      public function AssignPassiveRepairIconIndex(param1:uint) : void
-      {
-         this.m_PassiveRepairIconIndex = param1;
-         this.CampRepairIcon_mc.gotoAndStop(this.GetPassiveRepairFrameLabel());
-      }
-      
-      private function GetPassiveRepairFrameLabel() : String
-      {
-         switch(this.m_PassiveRepairIconIndex)
-         {
-            case 1:
-               return "ActiveSkull";
-            default:
-               return "default";
-         }
       }
    }
 }

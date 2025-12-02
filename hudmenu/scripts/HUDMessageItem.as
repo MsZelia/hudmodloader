@@ -6,7 +6,7 @@ package
    import flash.text.TextFieldAutoSize;
    import scaleform.gfx.TextFieldEx;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol316")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol319")]
    public class HUDMessageItem extends HUDMessageItemBase
    {
       

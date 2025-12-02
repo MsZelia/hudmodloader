@@ -23,11 +23,15 @@ package
       
       public var DoTIconsManager_mc:DoTIconsManager;
       
-      public var EncounterMeterIcon_mc:MovieClip;
+      public var EncounterHolder_mc:EncounterHolder;
+      
+      public var HuntedTargetIcon_mc:MovieClip;
       
       private var DisplayText_tf:TextField;
       
-      private var m_IconIndex:uint = 0;
+      private var m_EncounterIconType:uint = 0;
+      
+      private var m_EncounterIconLevel:uint = 0;
       
       private var m_DoTDamage:Boolean = false;
       
@@ -46,6 +50,10 @@ package
          if(this.DisplayText_mc)
          {
             this.DisplayText_tf = this.DisplayText_mc.DisplayText_tf as TextField;
+         }
+         if(this.EncounterHolder_mc)
+         {
+            this.EncounterHolder_mc.visible = false;
          }
       }
       
@@ -87,41 +95,33 @@ package
          }
       }
       
-      public function SetSkullIcon(param1:uint) : void
+      public function SetEncounter(param1:uint, param2:uint) : void
       {
-         this.m_IconIndex = param1;
-         if(param1 > 0)
+         if(this.m_EncounterIconType != param1 || this.m_EncounterIconLevel != param2)
          {
-            this.EncounterMeterIcon_mc.visible = true;
-            this.EncounterMeterIcon_mc.gotoAndStop(this.GetSkullFrameLabel());
-            addEventListener(Event.ENTER_FRAME,this.onSetIconPosition);
-         }
-         else
-         {
-            this.EncounterMeterIcon_mc.visible = false;
+            this.m_EncounterIconType = param1;
+            this.m_EncounterIconLevel = param2;
+            if(this.EncounterHolder_mc)
+            {
+               if(this.m_EncounterIconLevel > 0 && this.m_EncounterIconType > EncounterHolder.ENCOUNTER_TYPE_NONE)
+               {
+                  this.EncounterHolder_mc.visible = true;
+                  this.EncounterHolder_mc.SetIcon(this.m_EncounterIconType,this.m_EncounterIconLevel,false);
+                  addEventListener(Event.ENTER_FRAME,this.onSetIconPosition);
+               }
+               else
+               {
+                  this.EncounterHolder_mc.visible = false;
+               }
+            }
          }
       }
       
       private function onSetIconPosition() : *
       {
          var _loc1_:Point = this.DisplayText_tf.localToGlobal(new Point(this.DisplayText_tf.getLineMetrics(0).x,0));
-         this.EncounterMeterIcon_mc.x = this.globalToLocal(_loc1_).x + ICON_OFFSET - this.EncounterMeterIcon_mc.width * 0.5;
+         this.EncounterHolder_mc.x = this.globalToLocal(_loc1_).x + ICON_OFFSET - this.EncounterHolder_mc.width * 0.5;
          removeEventListener(Event.ENTER_FRAME,this.onSetIconPosition);
-      }
-      
-      private function GetSkullFrameLabel() : String
-      {
-         switch(this.m_IconIndex)
-         {
-            case 1:
-               return "Easy";
-            case 2:
-               return "Medium";
-            case 3:
-               return "Difficult";
-            default:
-               return "";
-         }
       }
       
       public function SetMeterHostile(param1:Boolean) : *

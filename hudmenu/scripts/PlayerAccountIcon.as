@@ -1,6 +1,6 @@
 package
 {
-   [Embed(source="/_assets/assets.swf", symbol="symbol234")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol237")]
    public dynamic class PlayerAccountIcon extends ImageFixture
    {
       

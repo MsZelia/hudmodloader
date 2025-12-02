@@ -2,7 +2,7 @@ package
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol122")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol125")]
    public dynamic class RequestHeal1 extends MovieClip
    {
       

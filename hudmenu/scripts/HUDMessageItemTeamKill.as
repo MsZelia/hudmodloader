@@ -3,7 +3,7 @@ package
    import Shared.GlobalFunc;
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol241")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol244")]
    public class HUDMessageItemTeamKill extends HUDMessageItemBase
    {
       

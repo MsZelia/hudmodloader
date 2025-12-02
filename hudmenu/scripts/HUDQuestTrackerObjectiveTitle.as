@@ -20,6 +20,10 @@ package
       
       private var m_ObjectiveIconsV:Vector.<HUDObjectiveIcon>;
       
+      private var m_ParsedText:String = "";
+      
+      private var m_PrefixOffset:Number = 0;
+      
       public function HUDQuestTrackerObjectiveTitle()
       {
          super();
@@ -27,7 +31,21 @@ package
          TextFieldEx.setTextAutoSize(this.TitleText_tf,TextFieldEx.TEXTAUTOSZ_SHRINK);
       }
       
-      public function setTitleData(param1:String) : void
+      public function ShowTitleText(param1:String, param2:String) : *
+      {
+         this.m_PrefixOffset = param1.length;
+         this.TitleText_tf.text = param1 + this.m_ParsedText + param2;
+         if(this.TitleText_tf.length > 0 && this.m_ObjectiveIconsV.length > 0)
+         {
+            addEventListener(Event.EXIT_FRAME,this.onExitFrame);
+         }
+         else
+         {
+            removeEventListener(Event.EXIT_FRAME,this.onExitFrame);
+         }
+      }
+      
+      private function parseTitleText(param1:String) : *
       {
          var _loc6_:String = null;
          var _loc7_:HUDObjectiveIcon = null;
@@ -63,14 +81,15 @@ package
          {
             removeChild(this.m_ObjectiveIconsV.pop());
          }
-         this.TitleText_tf.text = _loc3_;
-         if(this.TitleText_tf.length > 0 && this.m_ObjectiveIconsV.length > 0)
+         this.m_ParsedText = _loc3_;
+      }
+      
+      public function setTitleData(param1:String, param2:Boolean = true) : void
+      {
+         this.parseTitleText(param1);
+         if(param2)
          {
-            addEventListener(Event.EXIT_FRAME,this.onExitFrame);
-         }
-         else
-         {
-            removeEventListener(Event.EXIT_FRAME,this.onExitFrame);
+            this.ShowTitleText("","");
          }
       }
       
@@ -83,7 +102,7 @@ package
          {
             for each(_loc2_ in this.m_ObjectiveIconsV)
             {
-               _loc3_ = this.TitleText_tf.getCharBoundaries(_loc2_.charIndex);
+               _loc3_ = this.TitleText_tf.getCharBoundaries(_loc2_.charIndex + this.m_PrefixOffset);
                _loc2_.x = _loc3_.x + this.TitleText_tf.x;
                _loc2_.y = _loc3_.y;
                _loc4_ = this.TitleText_tf.textHeight / this.TitleText_tf.numLines / DEFAULT_ICON_HEIGHT;

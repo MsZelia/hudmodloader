@@ -4,6 +4,7 @@ package
    import fl.transitions.Tween;
    import fl.transitions.easing.*;
    import flash.display.MovieClip;
+   import flash.events.Event;
    import flash.utils.clearTimeout;
    import flash.utils.setTimeout;
    
@@ -23,6 +24,8 @@ package
       public static const MOD_PROMPT:int = 5;
       
       private static const ANIM_TIME:Number = 150;
+      
+      private static const FORCE_HIDE_EVENT:String = "AnimCompleteForceHide";
       
       public var Image_mc:SWFLoaderClip;
       
@@ -46,9 +49,9 @@ package
       
       private var m_VisAlpha:Number = 1;
       
-      private var m_Image:String;
-      
       private var m_Mod:int;
+      
+      private var m_Image:String;
       
       private var m_Timeout:int = -1;
       
@@ -60,6 +63,7 @@ package
       {
          super();
          this.Image_mc.clipScale = 1;
+         addEventListener(FORCE_HIDE_EVENT,this.onForceHide);
       }
       
       public static function getModPath(param1:int) : String
@@ -85,6 +89,65 @@ package
          return _loc2_;
       }
       
+      public function get removed() : Boolean
+      {
+         return this.m_Removed;
+      }
+      
+      public function set removed(param1:Boolean) : void
+      {
+         this.m_Removed = param1;
+      }
+      
+      public function set parentWidget(param1:EmoteWidget) : void
+      {
+         this.m_ParentWidget = param1;
+      }
+      
+      public function get image() : String
+      {
+         return this.m_Image;
+      }
+      
+      public function setImage(param1:String, param2:uint = 0) : void
+      {
+         this.m_Image = param1;
+         if(this.m_ImageInstance != null)
+         {
+            this.Image_mc.removeChild(this.m_ImageInstance);
+            this.m_ImageInstance = null;
+         }
+         this.m_ImageInstance = this.Image_mc.setContainerIconClip(this.m_Image,"Components\\Emotes");
+         if(param2 > 0)
+         {
+            this.m_ImageInstance.Value_mc.Value_tf.text = param2.toString();
+         }
+         if(this.m_ImageInstance != null)
+         {
+            this.m_ImageInstance.alpha = 0;
+         }
+      }
+      
+      public function get mod() : int
+      {
+         return this.m_Mod;
+      }
+      
+      public function set mod(param1:int) : void
+      {
+         this.m_Mod = param1;
+         if(this.m_ModInstance != null)
+         {
+            this.Mod_mc.removeChild(this.m_ModInstance);
+            this.m_ModInstance = null;
+         }
+         this.m_ModInstance = this.Mod_mc.setContainerIconClip(getModPath(param1),"Components\\Emotes");
+         if(this.m_ModInstance != null)
+         {
+            this.m_ModInstance.alpha = 0;
+         }
+      }
+      
       public function set visAlpha(param1:Number) : void
       {
          this.m_VisAlpha = param1;
@@ -98,35 +161,38 @@ package
          }
       }
       
-      public function set removed(param1:Boolean) : void
-      {
-         this.m_Removed = param1;
-      }
-      
       public function get realWidth() : Number
       {
+         var _loc1_:Number = this.Image_mc.width;
          if(this.m_ImageInstance != null)
          {
             if(this.m_ImageInstance.Sizer_mc != null)
             {
-               return this.m_ImageInstance.Sizer_mc.width;
+               _loc1_ = Number(this.m_ImageInstance.Sizer_mc.width);
             }
-            return this.m_ImageInstance.width;
+            else
+            {
+               _loc1_ = this.m_ImageInstance.width;
+            }
          }
-         return this.Image_mc.width;
+         return _loc1_;
       }
       
       public function get realHeight() : Number
       {
+         var _loc1_:Number = this.Image_mc.height;
          if(this.m_ImageInstance != null)
          {
             if(this.m_ImageInstance.Sizer_mc != null)
             {
-               return this.m_ImageInstance.Sizer_mc.height;
+               _loc1_ = Number(this.m_ImageInstance.Sizer_mc.height);
             }
-            return this.m_ImageInstance.height;
+            else
+            {
+               _loc1_ = this.m_ImageInstance.height;
+            }
          }
-         return this.Image_mc.height;
+         return _loc1_;
       }
       
       public function set showMod(param1:Boolean) : void
@@ -136,11 +202,6 @@ package
             this.m_HideModTween = new Tween(this.m_ModInstance,"alpha",None.easeNone,this.m_VisAlpha,0,ANIM_TIME / 1000,true);
          }
          this.m_ShowMod = param1;
-      }
-      
-      public function get removed() : Boolean
-      {
-         return this.m_Removed;
       }
       
       private function set imageAlpha(param1:Number) : void
@@ -153,6 +214,20 @@ package
          {
             this.m_ModInstance.alpha = param1;
          }
+      }
+      
+      public function set timeout(param1:int) : void
+      {
+         if(this.m_Timeout != -1)
+         {
+            clearTimeout(this.m_Timeout);
+         }
+         this.m_Timeout = setTimeout(this.hide,param1 * 1000);
+      }
+      
+      private function onForceHide(param1:Event) : void
+      {
+         this.hide();
       }
       
       public function clearTweens(param1:Boolean = false) : void
@@ -185,51 +260,6 @@ package
          }
       }
       
-      public function set image(param1:String) : void
-      {
-         this.m_Image = param1;
-         if(this.m_ImageInstance != null)
-         {
-            this.Image_mc.removeChild(this.m_ImageInstance);
-            this.m_ImageInstance = null;
-         }
-         this.m_ImageInstance = this.Image_mc.setContainerIconClip(param1,"Components\\Emotes");
-         if(this.m_ImageInstance != null)
-         {
-            this.m_ImageInstance.alpha = 0;
-         }
-      }
-      
-      public function get image() : String
-      {
-         return this.m_Image;
-      }
-      
-      public function set mod(param1:int) : void
-      {
-         this.m_Mod = param1;
-         if(this.m_ModInstance != null)
-         {
-            this.Mod_mc.removeChild(this.m_ModInstance);
-            this.m_ModInstance = null;
-         }
-         this.m_ModInstance = this.Mod_mc.setContainerIconClip(getModPath(param1),"Components\\Emotes");
-         if(this.m_ModInstance != null)
-         {
-            this.m_ModInstance.alpha = 0;
-         }
-      }
-      
-      public function get mod() : int
-      {
-         return this.m_Mod;
-      }
-      
-      public function set parentWidget(param1:EmoteWidget) : void
-      {
-         this.m_ParentWidget = param1;
-      }
-      
       public function requestRemoval() : void
       {
          this.m_ParentWidget.removeEntry(this,!this.m_RemoveFromTimer);
@@ -246,15 +276,6 @@ package
          this.m_Removed = true;
          this.m_Timeout = setTimeout(this.requestRemoval,ANIM_TIME);
          this.m_FadeTween = new Tween(this,"imageAlpha",None.easeNone,this.m_VisAlpha,0,ANIM_TIME / 1000,true);
-      }
-      
-      public function set timeout(param1:int) : void
-      {
-         if(this.m_Timeout != -1)
-         {
-            clearTimeout(this.m_Timeout);
-         }
-         this.m_Timeout = setTimeout(this.hide,param1 * 1000);
       }
    }
 }

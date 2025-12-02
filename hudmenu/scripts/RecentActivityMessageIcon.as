@@ -2,7 +2,7 @@ package
 {
    import Shared.AS3.SWFLoaderClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol243")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol246")]
    public dynamic class RecentActivityMessageIcon extends SWFLoaderClip
    {
       
