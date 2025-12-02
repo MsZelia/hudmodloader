@@ -46,7 +46,7 @@ package
             this.m_EncounterMeters[_loc2_].SetMeterHostile(_loc3_.IsHostile);
             this.m_EncounterMeters[_loc2_].SetMeterPercent(_loc3_.Percent);
             this.m_EncounterMeters[_loc2_].SetMeterName(_loc3_.Name);
-            this.m_EncounterMeters[_loc2_].SetSkullIcon(_loc3_.SkullIcon ? uint(_loc3_.SkullIcon) : 0);
+            this.m_EncounterMeters[_loc2_].SetEncounter(_loc3_.EncounterIconType,_loc3_.EncounterIconLevel);
             _loc2_++;
          }
       }

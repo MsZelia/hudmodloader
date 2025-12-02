@@ -6,7 +6,7 @@ package
    import flash.display.MovieClip;
    import flash.events.Event;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol717")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol731")]
    public class HUDFloatingTargetManager extends MovieClip
    {
       
@@ -30,6 +30,7 @@ package
          this.m_ValidHudModes = new Array(HUDModes.ALL,HUDModes.ACTIVATE_TYPE,HUDModes.SIT_WAIT_MODE,HUDModes.VERTIBIRD_MODE,HUDModes.POWER_ARMOR,HUDModes.IRON_SIGHTS,HUDModes.DEFAULT_SCOPE_MENU,HUDModes.INSIDE_MEMORY,HUDModes.CAMP_PLACEMENT,HUDModes.CROSSHAIR_AND_ACTIVATE_ONLY);
          BSUIDataManager.Subscribe("MapMenuDataChanges",this.onFloatingTargetChange);
          BSUIDataManager.Subscribe("HotMapMarkerData",this.onHotMapMenuData);
+         BSUIDataManager.Subscribe("HotReconMarkerData",this.onReconMarkerHotData);
          BSUIDataManager.Subscribe("HUDModeData",this.onHudModeDataChange);
          BSUIDataManager.Subscribe("ReconMarkerData",this.onReconMarkerData);
       }
@@ -171,6 +172,29 @@ package
          }
       }
       
+      private function onReconMarkerHotData(param1:FromClientDataEvent) : *
+      {
+         var _loc4_:uint = 0;
+         var _loc5_:* = false;
+         var _loc2_:Array = param1.data.updates;
+         var _loc3_:* = 0;
+         while(_loc3_ < this.m_Targets.length)
+         {
+            if(this.IsReconMarker(this.m_Targets[_loc3_]))
+            {
+               _loc4_ = this.getTargetByID(_loc2_,this.m_Targets[_loc3_].markerID);
+               _loc5_ = _loc4_ != uint.MAX_VALUE;
+               this.m_Targets[_loc3_].visible = _loc5_;
+               this.m_Targets[_loc3_].isOnScreen = _loc5_;
+               if(_loc5_)
+               {
+                  this.updateTargetHot(this.m_Targets[_loc3_],_loc2_[_loc4_]);
+               }
+            }
+            _loc3_++;
+         }
+      }
+      
       private function getTargetByID(param1:Array, param2:uint) : uint
       {
          var _loc3_:Boolean = false;
@@ -203,8 +227,8 @@ package
       private function updateTarget(param1:HUDFloatingTarget, param2:Object) : *
       {
          param1.distanceFromPlayer = param2.distanceFromPlayer;
-         param1.isOnScreen = param2.onScreen;
-         param1.visible = param2.onScreen;
+         param1.isOnScreen = false;
+         param1.visible = false;
          param1.markerID = param2.markerID;
          param1.markerType = param2.markerType;
          param1.isAI = param2.isAI;

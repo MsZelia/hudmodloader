@@ -3,7 +3,7 @@ package
    import Shared.AS3.BSUIComponent;
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1684")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1703")]
    public dynamic class HUDActiveEffectsWidget extends BSUIComponent
    {
       
@@ -45,11 +45,10 @@ package
       
       private function instantiateClips() : void
       {
-         var _loc1_:Number = NaN;
          var _loc3_:HUDActiveEffectClip = null;
          this.ClipHolderInternal_mc = new MovieClip();
          addChild(this.ClipHolderInternal_mc);
-         _loc1_ = 0;
+         var _loc1_:Number = 0;
          var _loc2_:* = 0;
          while(_loc2_ < MAX_NUM_CLIPS)
          {
@@ -67,6 +66,10 @@ package
       public function onDataUpdate(param1:Array) : void
       {
          var _loc4_:HUDActiveEffectClip = null;
+         var _loc5_:Object = null;
+         var _loc6_:uint = 0;
+         var _loc7_:uint = 0;
+         var _loc8_:uint = 0;
          var _loc2_:uint = param1.length - 1;
          var _loc3_:* = 0;
          while(_loc3_ < this.m_EffectClipsA.length)
@@ -74,9 +77,19 @@ package
             _loc4_ = this.m_EffectClipsA[_loc3_];
             if(_loc3_ < param1.length)
             {
+               _loc5_ = param1[_loc2_];
                _loc4_.IconFrame = param1[_loc2_].iconID;
                _loc4_.IconColor = param1[_loc2_].iconColor;
                _loc4_.StackAmount = param1[_loc2_].stackAmount;
+               _loc6_ = 0;
+               _loc7_ = 0;
+               if(param1[_loc2_].hasOwnProperty("duration"))
+               {
+                  _loc6_ = uint(param1[_loc2_].duration);
+                  _loc8_ = param1[_loc2_].hasOwnProperty("timeElapsed") ? uint(param1[_loc2_].timeElapsed) : 0;
+                  _loc7_ = _loc6_ > _loc8_ ? uint(_loc6_ - _loc8_) : 0;
+               }
+               _loc4_.setEffect(param1[_loc2_].iconID,_loc7_,_loc6_);
             }
             else
             {

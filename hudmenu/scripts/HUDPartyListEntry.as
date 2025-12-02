@@ -3,7 +3,7 @@ package
    import flash.display.MovieClip;
    import flash.text.TextField;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol98")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol101")]
    public dynamic class HUDPartyListEntry extends MovieClip
    {
       

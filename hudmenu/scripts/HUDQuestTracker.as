@@ -13,7 +13,7 @@ package
    import flash.utils.clearTimeout;
    import flash.utils.setTimeout;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1038")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1058")]
    public class HUDQuestTracker extends MovieClip
    {
       
