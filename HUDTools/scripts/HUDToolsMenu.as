@@ -8,6 +8,8 @@ package
       
       private static const HUDTOOLS:String = "HUDTools";
       
+      private static const MAX_SUBMENU_LEVEL:int = 4;
+      
       private var buttonList:Array;
       
       private var menuList:Array;
@@ -144,6 +146,7 @@ package
                   button = addButton(modName);
                   menu = new HUDToolsMenu(this._direction,modName,this.menuList.length - 1);
                   menu.x = button.x + button.width;
+                  menu.y = button.y;
                   submenuList[modName] = menu;
                   menu.visible = false;
                   addChild(menu);
@@ -154,14 +157,7 @@ package
                }
                menu.addItems(modName,parentMenu,buttonsToParse);
             }
-            else if(parentMenu != this._menuId)
-            {
-               if(this.menuList.indexOf(parentMenu) >= 0)
-               {
-                  submenuList[parentMenu].addItems(modName,parentMenu,buttonsToParse);
-               }
-            }
-            else
+            else if(parentMenu == this._menuId)
             {
                if(this.menuList.length == 0)
                {
@@ -196,13 +192,18 @@ package
                               this.menuList.push(buttonId);
                               button = addButton(buttonName);
                               button.setInfo(buttonId,buttonEnabled,buttonSubmenu,buttonTimeout);
-                              if(buttonSubmenu)
+                              if(buttonSubmenu && getDepth() + 1 <= MAX_SUBMENU_LEVEL)
                               {
-                                 menu = new HUDToolsMenu(this._direction,buttonId,this.menuList.length + this._startPos - this.startOffset);
+                                 menu = new HUDToolsMenu(this._direction,buttonId,index);
                                  menu.x = button.x + button.width;
+                                 menu.y = button.y;
                                  this.submenuList[buttonId] = menu;
                                  menu.visible = false;
                                  addChild(menu);
+                              }
+                              else
+                              {
+                                 buttonSubmenu = false;
                               }
                            }
                            else
@@ -214,7 +215,7 @@ package
                      }
                   }
                }
-               if(newMenuFlag)
+               if(newMenuFlag && this._menuId == HUDTOOLS)
                {
                   this._startOffset = int(this.menuList.length / 2);
                   if(this._startOffset > this._startPos)
@@ -235,7 +236,10 @@ package
                   menuName = this.menuList[index];
                   if(this.submenuList.hasOwnProperty(menuName))
                   {
-                     this.submenuList[menuName].updatePos(index + this._startPos - this._startOffset);
+                     if(this._menuId == HUDTOOLS)
+                     {
+                        this.submenuList[menuName].updatePos(index + this._startPos - this._startOffset);
+                     }
                   }
                   index++;
                }
@@ -246,6 +250,20 @@ package
                if(this.menuList.length == 0)
                {
                   addButton("No Options");
+               }
+            }
+            else if(this.menuList.indexOf(parentMenu) >= 0)
+            {
+               submenuList[parentMenu].addItems(modName,parentMenu,buttonsToParse);
+            }
+            else
+            {
+               for each(menuName in this.menuList)
+               {
+                  if(this.submenuList.hasOwnProperty(menuName))
+                  {
+                     this.submenuList[menuName].addItems(modName,parentMenu,buttonsToParse);
+                  }
                }
             }
          }
@@ -516,6 +534,23 @@ package
       private function displayError(errorString:String) : void
       {
          dispatchEvent(new HUDModError(errorString));
+      }
+      
+      public function get startOffset() : int
+      {
+         return this._startOffset;
+      }
+      
+      private function getDepth() : int
+      {
+         var depth:int = 0;
+         var p:Sprite = this;
+         while(p.parent is HUDToolsMenu)
+         {
+            depth++;
+            p = p.parent;
+         }
+         return depth;
       }
    }
 }
