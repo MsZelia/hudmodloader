@@ -196,7 +196,7 @@ package
                               {
                                  menu = new HUDToolsMenu(this._direction,buttonId,index);
                                  menu.x = button.x + button.width;
-                                 menu.y = button.y;
+                                 menu.y = (this._direction == "up") ? button.y + 30 : button.y - 30;
                                  this.submenuList[buttonId] = menu;
                                  menu.visible = false;
                                  addChild(menu);
@@ -380,6 +380,7 @@ package
                menuName = this.menuList[this._selected];
                if(this.submenuList.hasOwnProperty(menuName))
                {
+                  this.submenuList[menuName].y = (this._direction == "up") ? this.buttonList[this._selected].y + 30 : this.buttonList[this._selected].y - 30;
                   this.submenuList[menuName].visible = true;
                   result = menuName;
                }
@@ -451,6 +452,7 @@ package
                menuName = this.menuList[this._selected];
                if(this.submenuList.hasOwnProperty(menuName))
                {
+                  this.submenuList[menuName].y = (this._direction == "up") ? this.buttonList[this._selected].y + 30 : this.buttonList[this._selected].y - 30;
                   this.submenuList[menuName].visible = true;
                   result = menuName;
                }
@@ -484,7 +486,9 @@ package
             menuName = this.menuList[this._selected];
             if(this.submenuList.hasOwnProperty(menuName))
             {
-               result = this.submenuList[menuName].moveStart();
+               var submenu:HUDToolsMenu = this.submenuList[menuName];
+               result = submenu.moveStart();
+               submenu.y = (this._direction == "up") ? this.buttonList[this._selected].y + 30 : this.buttonList[this._selected].y - 30;
                if(result != null)
                {
                   this._inSubmenu = true;
