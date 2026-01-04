@@ -277,6 +277,7 @@ package
       {
          var result:String = "";
          var menuName:String = "";
+         var attempts:int = 0;
          if(this.menuList.length == 0)
          {
             return null;
@@ -293,6 +294,19 @@ package
          {
             this._selected = 0;
          }
+         // Let's skip disabled buttons
+         while(this._selected >= 0 && 
+               this._selected < this.buttonList.length && 
+               this.buttonList[this._selected].isDisabled && 
+               attempts < this.buttonList.length)
+         {
+            ++this._selected;
+            if(this._selected >= this.buttonList.length)
+            {
+               this._selected = 0;
+            }
+            attempts++;
+         }
          buttonList[this._selected].isSelected = true;
          menuName = this.menuList[this._selected];
          if(this.submenuList.hasOwnProperty(menuName))
@@ -308,6 +322,7 @@ package
          var result:String = "";
          var menuName:String = "";
          var previous:int = this._selected;
+         var attempts:int = 0;
          if(this.menuList.length == 0)
          {
             return null;
@@ -337,6 +352,19 @@ package
                   this._selected = 0;
                }
             }
+            // Skip disabled buttons
+            while(this._selected >= 0 && 
+                  this._selected < this.buttonList.length && 
+                  this.buttonList[this._selected].isDisabled && 
+                  attempts < this.buttonList.length)
+            {
+               ++this._selected;
+               if(this._selected >= this.buttonList.length)
+               {
+                  this._selected = 0;
+               }
+               attempts++;
+            }
             if(previous >= 0 && previous < this.buttonList.length)
             {
                this.buttonList[previous].isSelected = false;
@@ -365,6 +393,7 @@ package
          var result:String = "";
          var menuName:String = "";
          var previous:int = this._selected;
+         var attempts:int = 0;
          if(this.menuList.length == 0)
          {
             return null;
@@ -393,6 +422,19 @@ package
                {
                   this._selected = this.buttonList.length - 1;
                }
+            }
+            // Skip disabled buttons
+            while(this._selected >= 0 && 
+                  this._selected < this.buttonList.length && 
+                  this.buttonList[this._selected].isDisabled && 
+                  attempts < this.buttonList.length)
+            {
+               --this._selected;
+               if(this._selected < 0)
+               {
+                  this._selected = this.buttonList.length - 1;
+               }
+               attempts++;
             }
             if(previous >= 0 && previous < this.buttonList.length)
             {
@@ -554,4 +596,3 @@ package
       }
    }
 }
-
