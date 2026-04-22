@@ -54,7 +54,7 @@ package
          var looseType:String;
          var modType:String = "HUD";
          var line:* = undefined;
-         var lineArray:Array = configEvent.target.data.split("\r\n");
+         var lineArray:Array = configEvent.target.data.split(/\r?\n/);
          try
          {
             helper = new LoaderHelper(this.topLevel,"HUDTools","HUD","required");
