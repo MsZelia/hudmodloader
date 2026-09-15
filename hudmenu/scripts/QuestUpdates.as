@@ -3,7 +3,7 @@ package
    import flash.display.MovieClip;
    import flash.text.TextField;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol236")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol283")]
    public dynamic class QuestUpdates extends MovieClip
    {
       

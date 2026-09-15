@@ -4,7 +4,7 @@ package
    import flash.text.TextField;
    import flash.utils.setTimeout;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol968")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1015")]
    public dynamic class HUDChatWidget extends BSUIComponent
    {
       

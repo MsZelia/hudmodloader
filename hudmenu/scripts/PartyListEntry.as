@@ -262,7 +262,7 @@ package
          {
             appendedStatus = GlobalFunc.LocalizeFormattedString("$InDailyOp");
          }
-         var name:String = PipBoyHUDMode && Boolean(aEntryObject.isLocalPlayer) ? "$You" : aEntryObject.name;
+         var name:String = PipBoyHUDMode && Boolean(aEntryObject.isLocalPlayer) ? "$$You" : aEntryObject.name;
          GlobalFunc.SetText(this.nameField_mc.textField,this.generateName(name,appendedStatus),true);
          GlobalFunc.TruncateSingleLineText(this.nameField_mc.textField);
          if(aEntryObject.voiceChatStatus != null)

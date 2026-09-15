@@ -1,6 +1,6 @@
 package
 {
-   [Embed(source="/_assets/assets.swf", symbol="symbol1585")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1716")]
    public dynamic class CritMeterBar extends MeterBarWidget
    {
       

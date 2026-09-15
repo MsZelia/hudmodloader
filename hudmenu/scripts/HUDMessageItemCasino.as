@@ -2,7 +2,7 @@ package
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol305")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol352")]
    public class HUDMessageItemCasino extends HUDMessageItemBase
    {
       
@@ -50,8 +50,7 @@ package
       
       override public function CanFadeOut() : Boolean
       {
-         var winStateDisplayed:Boolean = this.useCasinoHUDWidget() ? this.CasinoHUDWidget_mc.winStateDisplayed : true;
-         return _fullyFadedIn && !_fadeOutStarted && !bIsDirty && winStateDisplayed;
+         return _fullyFadedIn && !_fadeOutStarted && !bIsDirty;
       }
       
       override public function FadeIn() : *

@@ -2,7 +2,7 @@ package
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol550")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol597")]
    public dynamic class BroadsiderIcon extends MovieClip
    {
       

@@ -7,7 +7,7 @@ package
    import flash.display.MovieClip;
    import flash.events.Event;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol603")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol650")]
    public class DoTDamageIcon extends MovieClip
    {
       

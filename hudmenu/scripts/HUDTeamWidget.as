@@ -17,7 +17,7 @@ package
    import flash.text.TextField;
    import scaleform.gfx.TextFieldEx;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol966")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1013")]
    public dynamic class HUDTeamWidget extends BSUIComponent
    {
       

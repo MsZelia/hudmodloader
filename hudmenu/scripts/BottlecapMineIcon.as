@@ -2,7 +2,7 @@ package
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol551")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol598")]
    public dynamic class BottlecapMineIcon extends MovieClip
    {
       

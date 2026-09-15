@@ -2,7 +2,7 @@ package
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol552")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol599")]
    public dynamic class BookIcon extends MovieClip
    {
       

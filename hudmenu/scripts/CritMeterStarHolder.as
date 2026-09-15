@@ -3,7 +3,7 @@ package
    import Shared.AS3.BSUIComponent;
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1586")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1717")]
    public class CritMeterStarHolder extends BSUIComponent
    {
       

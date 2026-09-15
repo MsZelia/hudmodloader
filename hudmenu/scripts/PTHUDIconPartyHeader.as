@@ -2,7 +2,7 @@ package
 {
    import Overlay.PublicTeams.PublicTeamsIcon;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol958")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1005")]
    public dynamic class PTHUDIconPartyHeader extends PublicTeamsIcon
    {
       

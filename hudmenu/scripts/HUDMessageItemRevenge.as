@@ -3,7 +3,7 @@ package
    import Shared.GlobalFunc;
    import flash.events.Event;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol293")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol340")]
    public class HUDMessageItemRevenge extends HUDMessageItemBase
    {
       

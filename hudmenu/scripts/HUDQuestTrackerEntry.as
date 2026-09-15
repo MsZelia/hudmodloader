@@ -9,7 +9,7 @@ package
    import scaleform.gfx.Extensions;
    import scaleform.gfx.TextFieldEx;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol672")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol719")]
    public class HUDQuestTrackerEntry extends MovieClip
    {
       

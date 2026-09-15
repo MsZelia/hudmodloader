@@ -262,6 +262,7 @@ package Shared.AS3
          for(var i:int = 0; i < this.ButtonPoolV.length; i++)
          {
             this.ButtonPoolV[i].ButtonHintData = i < this._buttonHintDataV.length ? this._buttonHintDataV[i] : null;
+            this.ButtonPoolV[i].enableHoverState = this.useBackground;
          }
          SetIsDirty();
       }

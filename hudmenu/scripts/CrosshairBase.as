@@ -13,7 +13,7 @@ package
    import flash.filters.ColorMatrixFilter;
    import flash.utils.Timer;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1424")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1555")]
    public class CrosshairBase extends BSUIComponent
    {
       

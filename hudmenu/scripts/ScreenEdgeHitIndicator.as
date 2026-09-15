@@ -4,7 +4,7 @@ package
    import Shared.AS3.Data.FromClientDataEvent;
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1850")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1981")]
    public class ScreenEdgeHitIndicator extends MovieClip
    {
       

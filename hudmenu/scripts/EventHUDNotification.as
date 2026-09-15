@@ -3,7 +3,7 @@ package
    import flash.display.MovieClip;
    import scaleform.gfx.TextFieldEx;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol794")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol841")]
    public class EventHUDNotification extends MovieClip
    {
       

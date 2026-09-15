@@ -6,13 +6,9 @@ package
    import flash.events.Event;
    import scaleform.gfx.TextFieldEx;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol259")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol306")]
    public class HUDMessageItemRecentActivity extends HUDMessageItemBase
    {
-      
-      public static const EVENT_ON_FADE_OUT_COMPLETE:* = "HUDMessage::RecentActivityOnFadeOutComplete";
-      
-      public static const EVENT_ON_FADE_IN_COMPLETE:* = "HUDMessage::RecentActivityOnFadeInComplete";
       
       public static const EVENT_JOIN:* = "HUDMessage::RecentActivityJoin";
       

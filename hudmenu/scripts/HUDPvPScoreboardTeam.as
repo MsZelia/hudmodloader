@@ -3,7 +3,7 @@ package
    import Shared.GlobalFunc;
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1806")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1937")]
    public class HUDPvPScoreboardTeam extends MovieClip
    {
       

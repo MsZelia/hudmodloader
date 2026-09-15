@@ -2,7 +2,7 @@ package
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol537")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol584")]
    public dynamic class GaussRifleIcon extends MovieClip
    {
       

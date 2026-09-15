@@ -1,5 +1,6 @@
 package
 {
+   import Shared.AS3.BSAsync;
    import Shared.AS3.Data.BSUIDataManager;
    import Shared.AS3.Data.FromClientDataEvent;
    import flash.display.Loader;
@@ -9,7 +10,7 @@ package
    import flash.net.URLRequest;
    import flash.utils.Timer;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1367")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1498")]
    public class VOFlyoutManager extends MovieClip
    {
       
@@ -30,7 +31,8 @@ package
          "XPD_AC_NPCM_Juchi":"expeditions",
          "XPD_AC_NPCF_MotherCharlotte":"expeditions",
          "XPD_AC_NPCF_Jullian":"expeditions",
-         "XPD_AC_NPCM_MayorTim":"expeditions"
+         "XPD_AC_NPCM_MayorTim":"expeditions",
+         "SDOW_NPCM_Debunker":"slasher"
       };
       
       private static const PORTRAIT_PATH:String = "VOCharacterAnim.swf";
@@ -47,11 +49,11 @@ package
       
       public var DOVOWaveForm_mc:MovieClip;
       
+      public var SlasherVOFlyoutGraphic_mc:MovieClip;
+      
       private var PortraitLoader:Loader;
       
       private var m_ActiveFlyoutClip:MovieClip;
-      
-      private var m_VOCharacterAnim_mc:MovieClip;
       
       private var m_Portraits:MovieClip;
       
@@ -68,7 +70,7 @@ package
       public function VOFlyoutManager()
       {
          super();
-         addFrameScript(0,this.frame1,1,this.frame2,2,this.frame3);
+         addFrameScript(0,this.frame1,1,this.frame2,2,this.frame3,3,this.frame4);
          BSUIDataManager.Subscribe("HUDVOFlyoutData",this.onHUDVOFlyoutData);
          this.m_HideTimer = new Timer(HIDE_BUFFER_TIME,1);
          this.m_HideTimer.addEventListener(TimerEvent.TIMER_COMPLETE,this.onHideTimerEvent);
@@ -90,29 +92,24 @@ package
             this.m_SpeakerName = aName;
             if(this.m_SpeakerName == "")
             {
-               this.HideVOFlyout();
+               this.hideVOFlyout();
             }
             else if(this.m_PortraitsLoaded)
             {
-               this.ShowVOFlyout();
+               this.showVOFlyout();
             }
             else
             {
-               this.LoadPortraits();
+               this.loadPortraits();
             }
          }
       }
       
-      public function LoadPortraits() : *
+      private function loadPortraits() : *
       {
          var portraitLoadRequest:URLRequest = null;
          if(this.PortraitLoader == null)
          {
-            if(this.m_VOCharacterAnim_mc == null)
-            {
-               this.m_VOCharacterAnim_mc = new MovieClip();
-               this.m_VOCharacterAnim_mc.name = "m_VOCharacterAnim_mc";
-            }
             this.PortraitLoader = new Loader();
             portraitLoadRequest = new URLRequest(PORTRAIT_PATH);
             this.PortraitLoader.contentLoaderInfo.addEventListener(Event.COMPLETE,this.onPortraitLoadComplete);
@@ -120,7 +117,7 @@ package
          }
       }
       
-      public function RemovePortraits() : *
+      public function removePortraits() : *
       {
          if(this.PortraitLoader)
          {
@@ -133,11 +130,6 @@ package
             this.PortraitLoader = null;
          }
          this.m_Portraits = null;
-         if(this.m_VOCharacterAnim_mc)
-         {
-            this.m_VOCharacterAnim_mc.removeChildren();
-            this.m_VOCharacterAnim_mc = null;
-         }
          this.m_PortraitsLoaded = false;
       }
       
@@ -145,20 +137,16 @@ package
       {
          if(this.PortraitLoader != null)
          {
-            if(this.m_VOCharacterAnim_mc != null)
-            {
-               this.m_VOCharacterAnim_mc.addChild(loadCompleteEvent.currentTarget.content);
-               this.m_Portraits = this.m_VOCharacterAnim_mc.getChildAt(0) as MovieClip;
-               this.m_Portraits.x = PORTRAIT_X;
-               this.m_Portraits.y = PORTRAIT_Y;
-            }
+            this.m_Portraits = loadCompleteEvent.currentTarget.content;
+            this.m_Portraits.x = PORTRAIT_X;
+            this.m_Portraits.y = PORTRAIT_Y;
             this.PortraitLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE,this.onPortraitLoadComplete);
             this.m_PortraitsLoaded = true;
          }
-         this.ShowVOFlyout();
+         this.showVOFlyout();
       }
       
-      private function ShowVOFlyout() : void
+      private function showVOFlyout() : void
       {
          var frameLabel:String = FRAME_LABEL_MAPPING[this.m_SpeakerEditorID];
          if(!frameLabel || frameLabel.length == 0)
@@ -180,11 +168,19 @@ package
                case "appalachia":
                   this.m_ActiveFlyoutClip = this.AppalachiaVOFlyoutGraphic_mc;
                   break;
+               case "slasher":
+                  this.m_ActiveFlyoutClip = this.SlasherVOFlyoutGraphic_mc;
+                  break;
                case "dailyOps":
                default:
                   this.m_ActiveFlyoutClip = this.DOVOFlyoutGraphic_mc;
             }
          }
+         BSAsync.Await(this,BSAsync.AWAIT_FRAME_LABEL,this.setFlyoutClip,frameLabel);
+      }
+      
+      private function setFlyoutClip() : void
+      {
          if(this.m_ActiveFlyoutClip)
          {
             try
@@ -201,9 +197,9 @@ package
                   m_Portraits.VOCharacterAnim_mc.gotoAndStop(1);
                }
             }
-            if(this.m_ActiveFlyoutClip && this.m_ActiveFlyoutClip.VOCharacter_mc && Boolean(this.m_VOCharacterAnim_mc))
+            if(this.m_ActiveFlyoutClip && this.m_ActiveFlyoutClip.VOCharacter_mc && Boolean(this.m_Portraits))
             {
-               this.m_ActiveFlyoutClip.VOCharacter_mc.addChild(this.m_VOCharacterAnim_mc);
+               this.m_ActiveFlyoutClip.VOCharacter_mc.addChild(this.m_Portraits);
             }
             this.m_ActiveFlyoutClip.VOCharName_mc.textField_tf.text = this.m_SpeakerName;
             if(this.m_ActiveFlyoutClip.currentLabel == "off" || this.m_ActiveFlyoutClip.currentLabel == "rollOff")
@@ -213,7 +209,7 @@ package
          }
       }
       
-      private function HideVOFlyout() : void
+      private function hideVOFlyout() : void
       {
          this.m_HideTimer.reset();
          this.m_HideTimer.start();
@@ -242,7 +238,7 @@ package
       private function onUnloadTimerEvent(aEvent:Event) : void
       {
          this.m_UnloadTimer.reset();
-         this.RemovePortraits();
+         this.removePortraits();
       }
       
       internal function frame1() : *
@@ -256,6 +252,11 @@ package
       }
       
       internal function frame3() : *
+      {
+         stop();
+      }
+      
+      internal function frame4() : *
       {
          stop();
       }

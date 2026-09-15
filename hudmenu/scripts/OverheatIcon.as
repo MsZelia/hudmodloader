@@ -2,7 +2,7 @@ package
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1704")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1835")]
    public dynamic class OverheatIcon extends MovieClip
    {
       

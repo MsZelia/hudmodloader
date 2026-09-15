@@ -105,6 +105,8 @@ package
       
       public var TeammateMarkerBase:TeammateMarkersManager;
       
+      public var PetMarkerBase:PetMarkersManager;
+      
       public var networkIndicator_mc:MovieClip;
       
       public var HUDNotificationsGroup_mc:MovieClip;
@@ -564,11 +566,13 @@ package
          {
             this.HUDNotificationsGroup_mc.XPMeter_mc.gotoAndStop("levelup");
             this.HUDNotificationsGroup_mc.XPMeter_mc.NumberText.visible = false;
+            this.HUDNotificationsGroup_mc.XPMeter_mc.NumberText_pet.visible = false;
          }
          else
          {
             this.HUDNotificationsGroup_mc.XPMeter_mc.gotoAndStop("xp");
             this.HUDNotificationsGroup_mc.XPMeter_mc.NumberText.visible = true;
+            this.HUDNotificationsGroup_mc.XPMeter_mc.NumberText_pet.visible = true;
          }
       }
       
@@ -686,6 +690,7 @@ package
                }
             }
             this.TeammateMarkerBase.hideMarkers = mapMenuOpen;
+            this.PetMarkerBase.hideMarkers = mapMenuOpen;
          }
       }
       
@@ -1132,7 +1137,7 @@ package
             {
                if(this.HUDNotificationsGroup_mc.Messages_mc.currentPressAndHoldMessage)
                {
-                  BSUIDataManager.dispatchEvent(new CustomEvent(strDispatchEventName,{"locationID":this.HUDNotificationsGroup_mc.Messages_mc.currentPressAndHoldMessage.data.data.recentActivityId}));
+                  BSUIDataManager.dispatchEvent(new CustomEvent(strDispatchEventName,{"questID":this.HUDNotificationsGroup_mc.Messages_mc.currentPressAndHoldMessage.data.data.questID}));
                }
                this.clearButtonHold();
             }

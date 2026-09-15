@@ -22,8 +22,6 @@ package
       
       private var m_Data:Object = null;
       
-      private var m_WinStateDisplayed:Boolean = false;
-      
       public function CasinoHUDWidget()
       {
          super();
@@ -40,16 +38,10 @@ package
          return this.m_Data != null;
       }
       
-      public function get winStateDisplayed() : Boolean
-      {
-         return this.m_WinStateDisplayed;
-      }
-      
       public function init(aData:Object) : void
       {
          if(aData)
          {
-            this.m_WinStateDisplayed = false;
             this.m_Data = aData;
             if(this.m_Data.casinoGameType == CasinoShared.CASINO_GAME_TYPE_ROULETTE)
             {
@@ -195,7 +187,6 @@ package
             }
             GlobalFunc.PlayMenuSound(this.m_Data.capsWon == 0 ? "UICasinoLose" : "UICasinoWin");
          }
-         this.m_WinStateDisplayed = true;
       }
       
       private function onEnterFrame(aEvent:Event) : void

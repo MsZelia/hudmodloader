@@ -3,7 +3,7 @@ package
    import flash.display.MovieClip;
    import flash.events.Event;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1662")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1793")]
    public class BottomCenterGroup extends MovieClip
    {
       
