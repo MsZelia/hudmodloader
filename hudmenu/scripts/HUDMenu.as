@@ -567,12 +567,16 @@ package
             this.HUDNotificationsGroup_mc.XPMeter_mc.gotoAndStop("levelup");
             this.HUDNotificationsGroup_mc.XPMeter_mc.NumberText.visible = false;
             this.HUDNotificationsGroup_mc.XPMeter_mc.NumberText_pet.visible = false;
+            this.HUDNotificationsGroup_mc.XPMeter_mc.PlusSign_pet.visible = false;
+            this.HUDNotificationsGroup_mc.XPMeter_mc.xptext_pet.visible = false;
          }
          else
          {
             this.HUDNotificationsGroup_mc.XPMeter_mc.gotoAndStop("xp");
             this.HUDNotificationsGroup_mc.XPMeter_mc.NumberText.visible = true;
             this.HUDNotificationsGroup_mc.XPMeter_mc.NumberText_pet.visible = true;
+            this.HUDNotificationsGroup_mc.XPMeter_mc.PlusSign_pet.visible = true;
+            this.HUDNotificationsGroup_mc.XPMeter_mc.xptext_pet.visible = true;
          }
       }
       

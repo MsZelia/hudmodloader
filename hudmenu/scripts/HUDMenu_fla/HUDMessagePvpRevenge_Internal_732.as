@@ -3,7 +3,7 @@ package HUDMenu_fla
    import flash.display.MovieClip;
    import flash.text.TextField;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol339")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol343")]
    public dynamic class HUDMessagePvpRevenge_Internal_732 extends MovieClip
    {
       

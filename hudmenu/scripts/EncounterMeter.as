@@ -40,6 +40,8 @@ package
       
       private var m_MaxNameWidth:uint = 0;
       
+      private var m_IconPositionDirty:Boolean = false;
+      
       public function EncounterMeter()
       {
          super();
@@ -79,6 +81,7 @@ package
          var nameUppercase:String = asName.toUpperCase();
          if(Boolean(this.DisplayText_mc) && this.DisplayText_mc.DisplayText_tf.text != nameUppercase)
          {
+            this.m_IconPositionDirty = true;
             this.DisplayText_mc.gotoAndStop("OneLine");
             this.DisplayText_mc.DisplayText_tf.width = this.m_MaxNameWidth;
             this.DisplayText_mc.DisplayText_tf.text = nameUppercase;
@@ -124,7 +127,7 @@ package
       
       public function SetEncounter(aType:uint, aLevel:uint) : void
       {
-         if(this.m_EncounterIconType != aType || this.m_EncounterIconLevel != aLevel)
+         if(this.m_EncounterIconType != aType || this.m_EncounterIconLevel != aLevel || this.m_IconPositionDirty)
          {
             this.m_EncounterIconType = aType;
             this.m_EncounterIconLevel = aLevel;
@@ -150,6 +153,7 @@ package
          var globalPos:Point = this.DisplayText_mc.localToGlobal(new Point(this.DisplayText_mc.DisplayText_tf.x + textWidthDiff,0));
          this.EncounterHolder_mc.x = this.globalToLocal(globalPos).x - ICON_OFFSET - this.EncounterHolder_mc.width * 0.5;
          removeEventListener(Event.ENTER_FRAME,this.onSetIconPosition);
+         this.m_IconPositionDirty = false;
       }
       
       public function SetMeterHostile(abHostile:Boolean) : *

@@ -2,7 +2,7 @@ package
 {
    import Shared.GlobalFunc;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol351")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol355")]
    public class HUDMessageItemGroupKill extends HUDMessageItemBase
    {
       

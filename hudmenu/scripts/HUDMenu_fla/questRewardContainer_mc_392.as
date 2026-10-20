@@ -3,7 +3,7 @@ package HUDMenu_fla
    import flash.display.MovieClip;
    import flash.events.Event;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol967")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol971")]
    public dynamic class questRewardContainer_mc_392 extends MovieClip
    {
       

@@ -2,7 +2,7 @@ package HUDMenu_fla
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol879")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol883")]
    public dynamic class EXPComplete_358 extends MovieClip
    {
       

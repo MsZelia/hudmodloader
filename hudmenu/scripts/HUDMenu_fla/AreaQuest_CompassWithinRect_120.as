@@ -2,7 +2,7 @@ package HUDMenu_fla
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1764")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1768")]
    public dynamic class AreaQuest_CompassWithinRect_120 extends MovieClip
    {
       

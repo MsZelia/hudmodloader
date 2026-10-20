@@ -2,7 +2,7 @@ package HUDMenu_fla
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol633")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol637")]
    public dynamic class DoTBackerAnimation_549 extends MovieClip
    {
       

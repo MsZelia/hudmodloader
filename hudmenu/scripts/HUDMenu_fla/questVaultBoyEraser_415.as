@@ -2,7 +2,7 @@ package HUDMenu_fla
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol995")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol999")]
    public dynamic class questVaultBoyEraser_415 extends MovieClip
    {
       

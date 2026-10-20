@@ -3,7 +3,7 @@ package HUDMenu_fla
    import flash.display.MovieClip;
    import flash.text.TextField;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol156")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol91")]
    public dynamic class NamePlateLevelBoxContainer_mc_789 extends MovieClip
    {
       

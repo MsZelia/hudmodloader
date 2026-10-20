@@ -2,7 +2,7 @@ package HUDMenu_fla
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1215")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1219")]
    public dynamic class DOVOWaveForm_mc_271 extends MovieClip
    {
       

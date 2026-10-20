@@ -2,7 +2,7 @@ package HUDMenu_fla
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol39")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol106")]
    public dynamic class RankRibbon_mc_808 extends MovieClip
    {
       

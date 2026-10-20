@@ -11,7 +11,7 @@ package
    import scaleform.gfx.Extensions;
    import scaleform.gfx.TextFieldEx;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1694")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1698")]
    public dynamic class QuickContainerItem extends BSUIComponent
    {
       
@@ -201,7 +201,7 @@ package
             this.RaritySelector_mc.RarityOverlay_mc.transform.colorTransform = itemLevelColor;
             this.RarityIndicator_mc.transform.colorTransform = itemLevelColor;
             this.RarityBorder_mc.transform.colorTransform = itemLevelColor;
-            legendaryStarsSuffix = GlobalFunc.BuildLegendaryStarsGlyphString(this.data);
+            legendaryStarsSuffix = GlobalFunc.BuildStarsGlyphString(this.data);
             if(this.data.count > 1)
             {
                GlobalFunc.SetText(this.ItemName_tf,this.data.text + " (" + this.data.count + ")" + legendaryStarsSuffix,false,false,true);

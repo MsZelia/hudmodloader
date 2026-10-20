@@ -2,7 +2,7 @@ package HUDMenu_fla
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol848")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol852")]
    public dynamic class MiscAvailableAnnounce_mc_345 extends MovieClip
    {
       

@@ -2,7 +2,7 @@ package HUDMenu_fla
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1876")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1880")]
    public dynamic class HUDHungerMeter_mc_81 extends MovieClip
    {
       

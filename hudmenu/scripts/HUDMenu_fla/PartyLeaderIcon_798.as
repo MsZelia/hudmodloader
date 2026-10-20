@@ -2,7 +2,7 @@ package HUDMenu_fla
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol91")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol157")]
    public dynamic class PartyLeaderIcon_798 extends MovieClip
    {
       

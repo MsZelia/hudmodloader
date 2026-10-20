@@ -2,7 +2,7 @@ package HUDMenu_fla
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1879")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1883")]
    public dynamic class HUDFusionCoreMeter_83 extends MovieClip
    {
       

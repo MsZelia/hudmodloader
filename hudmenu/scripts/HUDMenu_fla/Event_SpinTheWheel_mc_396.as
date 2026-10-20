@@ -3,7 +3,7 @@ package HUDMenu_fla
    import flash.display.MovieClip;
    import flash.text.TextField;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol839")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol843")]
    public dynamic class Event_SpinTheWheel_mc_396 extends MovieClip
    {
       

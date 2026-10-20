@@ -25,7 +25,7 @@ package HUDMenu_fla
    import flash.utils.*;
    import flash.xml.*;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol2043")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol2044")]
    public dynamic class XPMeter_420 extends MovieClip
    {
       

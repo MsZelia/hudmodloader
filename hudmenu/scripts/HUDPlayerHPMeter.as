@@ -6,7 +6,7 @@ package
    import flash.display.MovieClip;
    import flash.events.Event;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1815")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1819")]
    public class HUDPlayerHPMeter extends HealthMeter
    {
       

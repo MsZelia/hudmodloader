@@ -4,7 +4,7 @@ package
    import flash.events.Event;
    import flash.text.TextFieldAutoSize;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol364")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol368")]
    public class HUDMessageItemBox extends HUDMessageItemBase
    {
       

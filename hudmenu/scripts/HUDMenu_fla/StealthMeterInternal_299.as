@@ -2,7 +2,7 @@ package HUDMenu_fla
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1108")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1112")]
    public dynamic class StealthMeterInternal_299 extends MovieClip
    {
       

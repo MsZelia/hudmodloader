@@ -2,7 +2,7 @@ package HUDMenu_fla
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol715")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol719")]
    public dynamic class QuestTrackerEntryTimer_510 extends MovieClip
    {
       

@@ -7,6 +7,7 @@ package
    import scaleform.gfx.Extensions;
    import scaleform.gfx.TextFieldEx;
    
+   [Embed(source="/_assets/assets.swf", symbol="symbol96")]
    public class PetNameplate extends BSUIComponent
    {
       
@@ -49,6 +50,7 @@ package
       public function PetNameplate()
       {
          super();
+         addFrameScript(0,this.frame1);
          Extensions.enabled = true;
          this._EntityID = uint.MAX_VALUE;
          this._Name = "";
@@ -154,6 +156,11 @@ package
          {
             this.PTNameplate_mc.PTNameplateBG_mc.width = PT_NAMEPLATE_MIN_WIDTH;
          }
+      }
+      
+      internal function frame1() : *
+      {
+         stop();
       }
    }
 }

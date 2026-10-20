@@ -2,7 +2,7 @@ package
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol200")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol80")]
    public dynamic class Petwoundedstate1 extends MovieClip
    {
       

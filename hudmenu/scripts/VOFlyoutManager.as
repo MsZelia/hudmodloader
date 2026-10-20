@@ -10,7 +10,7 @@ package
    import flash.net.URLRequest;
    import flash.utils.Timer;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1498")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1502")]
    public class VOFlyoutManager extends MovieClip
    {
       

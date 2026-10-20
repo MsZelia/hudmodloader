@@ -3,7 +3,7 @@ package
    import Shared.AS3.BSUIComponent;
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1843")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1847")]
    public dynamic class HUDActiveEffectsWidget extends BSUIComponent
    {
       
@@ -45,10 +45,11 @@ package
       
       private function instantiateClips() : void
       {
+         var position:Number = NaN;
          var newClip:HUDActiveEffectClip = null;
          this.ClipHolderInternal_mc = new MovieClip();
          addChild(this.ClipHolderInternal_mc);
-         var position:Number = 0;
+         position = 0;
          for(var i:* = 0; i < MAX_NUM_CLIPS; i++)
          {
             position -= CLIP_WIDTH;

@@ -25,7 +25,7 @@ package HUDMenu_fla
    import flash.utils.*;
    import flash.xml.*;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol279")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol283")]
    public dynamic class HUDReputationMeterInternal_745 extends MovieClip
    {
       

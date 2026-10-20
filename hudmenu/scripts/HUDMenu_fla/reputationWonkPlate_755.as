@@ -2,7 +2,7 @@ package HUDMenu_fla
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol247")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol251")]
    public dynamic class reputationWonkPlate_755 extends MovieClip
    {
       

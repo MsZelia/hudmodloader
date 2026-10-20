@@ -3,7 +3,7 @@ package HUDMenu_fla
    import flash.display.MovieClip;
    import flash.text.TextField;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1875")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1879")]
    public dynamic class HUDHungerMeterLabel_mc_82 extends MovieClip
    {
       

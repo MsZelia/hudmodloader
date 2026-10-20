@@ -4,7 +4,7 @@ package HUDMenu_fla
    import flash.display.MovieClip;
    import flash.events.Event;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol964")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol968")]
    public dynamic class AnnounceAvailableQuestNew_385 extends MovieClip
    {
       

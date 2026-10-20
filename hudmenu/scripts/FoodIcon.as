@@ -2,7 +2,7 @@ package
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol587")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol591")]
    public dynamic class FoodIcon extends MovieClip
    {
       

@@ -10,7 +10,7 @@ package
    import scaleform.gfx.Extensions;
    import scaleform.gfx.TextFieldEx;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol211")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol215")]
    public class TeammateNameplate extends BSUIComponent
    {
       

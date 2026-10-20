@@ -3,7 +3,7 @@ package HUDMenu_fla
    import flash.display.MovieClip;
    import flash.text.TextField;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol350")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol354")]
    public dynamic class HUDMessageItemGroupKill_Internal_730 extends MovieClip
    {
       

@@ -2,7 +2,7 @@ package HUDMenu_fla
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1023")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1027")]
    public dynamic class healthBarEnemy_318 extends MovieClip
    {
       

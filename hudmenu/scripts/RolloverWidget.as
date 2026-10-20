@@ -9,7 +9,7 @@ package
    import scaleform.gfx.Extensions;
    import scaleform.gfx.TextFieldEx;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1507")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1511")]
    public dynamic class RolloverWidget extends BSUIComponent
    {
       

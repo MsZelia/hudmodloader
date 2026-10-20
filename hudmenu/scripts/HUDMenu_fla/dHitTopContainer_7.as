@@ -2,7 +2,7 @@ package HUDMenu_fla
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1980")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1984")]
    public dynamic class dHitTopContainer_7 extends MovieClip
    {
       

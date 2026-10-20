@@ -2,7 +2,7 @@ package HUDMenu_fla
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol140")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol203")]
    public dynamic class TeamArrow_783 extends MovieClip
    {
       

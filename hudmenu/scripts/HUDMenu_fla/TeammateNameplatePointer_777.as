@@ -2,7 +2,7 @@ package HUDMenu_fla
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol130")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol193")]
    public dynamic class TeammateNameplatePointer_777 extends MovieClip
    {
       

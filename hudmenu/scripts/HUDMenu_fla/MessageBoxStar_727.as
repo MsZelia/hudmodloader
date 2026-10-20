@@ -2,7 +2,7 @@ package HUDMenu_fla
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol358")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol362")]
    public dynamic class MessageBoxStar_727 extends MovieClip
    {
       

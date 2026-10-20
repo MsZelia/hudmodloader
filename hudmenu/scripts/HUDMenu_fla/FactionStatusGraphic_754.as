@@ -2,7 +2,7 @@ package HUDMenu_fla
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol278")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol282")]
    public dynamic class FactionStatusGraphic_754 extends MovieClip
    {
       

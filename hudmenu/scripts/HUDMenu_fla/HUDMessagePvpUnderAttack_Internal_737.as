@@ -3,7 +3,7 @@ package HUDMenu_fla
    import flash.display.MovieClip;
    import flash.text.TextField;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol319")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol323")]
    public dynamic class HUDMessagePvpUnderAttack_Internal_737 extends MovieClip
    {
       

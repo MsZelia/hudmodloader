@@ -2,7 +2,7 @@ package HUDMenu_fla
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1220")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1224")]
    public dynamic class DOVOFlyoutGraphic_mc_276 extends MovieClip
    {
       

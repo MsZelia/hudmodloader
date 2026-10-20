@@ -2,7 +2,7 @@ package HUDMenu_fla
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1972")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1976")]
    public dynamic class pvpScoreBoardsContainer_mc_11 extends MovieClip
    {
       

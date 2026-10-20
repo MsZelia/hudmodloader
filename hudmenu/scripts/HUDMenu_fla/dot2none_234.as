@@ -3,7 +3,7 @@ package HUDMenu_fla
    import flash.display.MovieClip;
    import flash.events.Event;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1527")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1531")]
    public dynamic class dot2none_234 extends MovieClip
    {
       

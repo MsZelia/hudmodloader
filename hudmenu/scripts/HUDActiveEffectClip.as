@@ -6,7 +6,7 @@ package
    import fl.transitions.easing.*;
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol542")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol546")]
    public class HUDActiveEffectClip extends BSUIComponent
    {
       

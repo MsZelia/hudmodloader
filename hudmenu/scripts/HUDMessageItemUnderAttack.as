@@ -3,7 +3,7 @@ package
    import Shared.GlobalFunc;
    import flash.events.Event;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol320")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol324")]
    public class HUDMessageItemUnderAttack extends HUDMessageItemBase
    {
       

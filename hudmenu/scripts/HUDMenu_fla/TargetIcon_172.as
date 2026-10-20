@@ -3,7 +3,7 @@ package HUDMenu_fla
    import flash.display.MovieClip;
    import flash.geom.ColorTransform;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1084")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1088")]
    public dynamic class TargetIcon_172 extends MovieClip
    {
       

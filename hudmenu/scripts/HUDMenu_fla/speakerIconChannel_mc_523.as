@@ -2,7 +2,7 @@ package HUDMenu_fla
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol88")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol154")]
    public dynamic class speakerIconChannel_mc_523 extends MovieClip
    {
       

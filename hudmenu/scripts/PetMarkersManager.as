@@ -5,7 +5,7 @@ package
    import Shared.AS3.Data.FromClientDataEvent;
    import Shared.HUDModes;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1982")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1986")]
    public class PetMarkersManager extends BSDisplayObject
    {
       

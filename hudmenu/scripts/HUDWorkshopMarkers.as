@@ -5,7 +5,7 @@ package
    import Shared.AS3.Data.FromClientDataEvent;
    import scaleform.gfx.Extensions;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol785")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol789")]
    public class HUDWorkshopMarkers extends BSUIComponent
    {
       

@@ -2,7 +2,7 @@ package HUDMenu_fla
 {
    import flash.display.MovieClip;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1799")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1803")]
    public dynamic class RadsMeterBarInternal_56 extends MovieClip
    {
       

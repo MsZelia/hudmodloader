@@ -3,7 +3,7 @@ package HUDMenu_fla
    import flash.display.MovieClip;
    import flash.text.TextField;
    
-   [Embed(source="/_assets/assets.swf", symbol="symbol1943")]
+   [Embed(source="/_assets/assets.swf", symbol="symbol1947")]
    public dynamic class pvpLevelBox_mc_18 extends MovieClip
    {
       
